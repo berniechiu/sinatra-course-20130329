@@ -44,7 +44,7 @@ get '/contacts' do
 end
 
 post '/contacts' do
-  @contacts.merge params[:contact]
+  @contacts << params[:contact]
   save_csv(@contacts)
   redirect '/contacts'
 end
