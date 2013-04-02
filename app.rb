@@ -44,7 +44,15 @@ get '/contacts' do
 end
 
 post '/contacts' do
-  @contacts << params[:contact]
+  number_of_contacts = @contacts.length
+  next_id = number_of_contacts + 1
+  @contacts << {
+    id: next_id,
+    name: params[:contact][:name],
+    phone: params[:contact][:phone],
+    address: params[:contact][:address],
+    note: params[:contact][:note]
+  }
   save_csv(@contacts)
   redirect '/contacts'
 end
