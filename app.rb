@@ -43,6 +43,18 @@ get '/contacts' do
   erb :index
 end
 
+post '/contacts' do
+  @contacts.merge params[:contact]
+  save_csv(@contacts)
+  redirect '/contacts'
+end
+
+get '/contacts/new' do
+  @action = "/contacts"
+  @method = :post
+  erb :new
+end
+
 before %r{\/contacts\/(\d+).*} do
   @contact = @contacts.select{|contact| contact["id"] == params[:captures].first}
   not_found if @contact.empty?
@@ -62,7 +74,7 @@ get '/contacts/:id/edit' do
 end
 
 delete '/contacts/:id' do
-  @contacts.reject! { |contact| contact["id"] == params[:id]}
+  @contacts.reject! { |contact| contact['id'] == params[:id]}
   save_csv(@contacts)
   redirect '/contacts'
 end
