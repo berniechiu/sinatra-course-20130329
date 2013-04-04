@@ -4,6 +4,8 @@ require 'sinatra'
 require 'csv'
 
 set :csvfile, 'fakedata.csv'
+set :public_folder, File.dirname(__FILE__) + '/static'
+
 
 before do
   @contacts = []
@@ -84,7 +86,7 @@ get '/contacts/:id/edit' do
 end
 
 delete '/contacts/:id' do
-  @contacts.delete_if { |contact| contact['id'] == params[:id] }
+  @contacts.reject! { |contact| contact['id'] == params[:id] }
   save_csv(@contacts)
   redirect '/contacts'
 end
