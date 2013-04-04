@@ -94,5 +94,3 @@ end
 get '/contacts/:id' do
   erb :show
 end
-
-
