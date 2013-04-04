@@ -4,8 +4,6 @@ require 'sinatra'
 require 'csv'
 
 set :csvfile, 'fakedata.csv'
-set :public_folder, File.dirname(__FILE__) + '/static'
-
 
 before do
   @contacts = []
