@@ -46,11 +46,13 @@ end
 post '/contacts' do
   number_of_contacts = @contacts.length
   next_id = number_of_contacts + 1
+  date = Date.today.strftime("%Y/%-m/%-d")
   @contacts << {
     id: next_id,
     name: params[:contact][:name],
     phone: params[:contact][:phone],
     address: params[:contact][:address],
+    created_on: date,
     note: params[:contact][:note]
   }
   save_csv(@contacts)
@@ -82,7 +84,7 @@ get '/contacts/:id/edit' do
 end
 
 delete '/contacts/:id' do
-  @contacts.reject! { |contact| contact['id'] == params[:id]}
+  @contacts.delete_if { |contact| contact['id'] == params[:id] }
   save_csv(@contacts)
   redirect '/contacts'
 end
